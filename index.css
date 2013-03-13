@@ -1,10 +1,44 @@
 
-form{
-	width: 33%;
-	margin-right: auto;
-	margin-left: auto;
+body{
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	font-weight: 500;
 }
 
-input{
+form{
+	font-size: 32pt;
+}
+
+input[type=text]{
+	font-size: 32pt;
+	padding: 10px;
 	text-align: right;
+	width: 45%;
+	margin-bottom: 20px;
+}
+
+input[type=button]{
+	background-color: #ED5F21;
+	border: none;
+	color: #FFFFFF;
+	font-size: 16pt;
+	padding: 10px;
+	cursor: pointer;
+}
+
+h1{
+	margin-bottom: 20px;
+
+}
+
+
+#loading{
+	display: none;
+}
+
+#wrapper{
+	width: 75%;
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
+
 }
