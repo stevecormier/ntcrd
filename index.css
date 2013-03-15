@@ -23,6 +23,10 @@ input[type=button]{
 	font-size: 16pt;
 	padding: 10px;
 	cursor: pointer;
+	-moz-border-radius: 0;
+  	-webkit-border-radius: 0;
+  	-webkit-appearance: none;
+  	
 }
 
 h1{
@@ -30,9 +34,35 @@ h1{
 
 }
 
+#bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+.bgwidth{
+	width: 100%;
+}
+
+.bgheight{
+	height: 100%;
+}
 
 #loading{
 	display: none;
+}
+
+#quote{
+
+}
+
+#quote-text h1{
+
+}
+
+#quote-text h2{
+
 }
 
 #wrapper{
