@@ -18,22 +18,32 @@
  	function createNTCRD(){
 
  		var name = $(":text").attr("value");
- 		var url = "http://api.tumblr.com/v2/blog/" + name + ".tumblr.com/posts/photo?api_key=" + API_KEY + "&notes_info=true&callback=?";
- 		var image = "http://25.media.tumblr.com/e49d042bb128a120d447c7812e2914c7/tumblr_mjiqgrsKVX1r0ix14o1_r5_400.gif";
- 		var song;
- 		var quote = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.";
- 		var source = "Lorem Ipsum";
+ 		var photo_url = "http://api.tumblr.com/v2/blog/" + name + ".tumblr.com/posts/photo?api_key=" + API_KEY + "&notes_info=true&callback=?";
+ 		var quote_url = "http://api.tumblr.com/v2/blog/" + name + ".tumblr.com/posts/quote?api_key=" + API_KEY + "&notes_info=true&callback=?";
+ 		var audio_url = "http://api.tumblr.com/v2/blog/" + name + ".tumblr.com/posts/audio?api_key=" + API_KEY + "&notes_info=true&callback=?";
+ 		var photo;
+ 		var audio;
+ 		var quote;
+ 		var source;
 
- 		$.getJSON(url, function(data) {
-
- 			$("#bg").attr("src", image);
- 			$("#quote-text").append(quote);
- 			$("#quote-source").append("- " + source);
- 			$("form").hide();
+ 		$.getJSON(photo_url, function(data) {
  			console.log(data);
+ 			photo = findMostNotes(data.response.posts);
+
+ 			$("#bg").attr("src", data.response.posts[photo].photos[0].original_size.url);
  			
+ 		});
+
+ 		$.getJSON(quote_url, function(data) {
+
+ 			quote = findMostNotes(data.response.posts);
+
+ 			$("#quote-text").append(data.response.posts[quote].text);
+ 			$("#quote-source").append("- " + data.response.posts[quote].source);
 
  		});
+ 
+ 		$("form").hide();
 
 	}
 
@@ -49,6 +59,20 @@
 		    	.addClass('bgwidth');
 		}
 					
+	}
+
+	function findMostNotes(posts){
+
+		var index = 0;
+
+		for (var i = 1; i < posts.length; i++) {
+			if(posts[i].note_count > posts[index].note_count){
+				index = i;
+			} 
+		}
+
+		return index;
+
 	}
 	                   			
 	theWindow.resize(resizeBg).trigger("resize"); 
