@@ -37,6 +37,7 @@
  		$.getJSON(quote_url, function(data) {
 
  			quote = findMostNotes(data.response.posts);
+ 			console.log(data.response.posts[quote]);
 
  			$("#quote-text").append(data.response.posts[quote].text);
  			$("#quote-source").append("- " + data.response.posts[quote].source);
@@ -44,6 +45,7 @@
  		});
  
  		$("form").hide();
+ 		$("#quote").show();
 
 	}
 
@@ -60,7 +62,6 @@
 		}
 					
 	}
-
 	function findMostNotes(posts){
 
 		var index = 0;

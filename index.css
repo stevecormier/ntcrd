@@ -26,11 +26,16 @@ input[type=button]{
 	-moz-border-radius: 0;
   	-webkit-border-radius: 0;
   	-webkit-appearance: none;
+  	-moz-box-shadow:    inset 0 -5px 0 #BE4C1A;
+  	-webkit-box-shadow: inset 0 -5px 0 #BE4C1A;
+  	box-shadow:         inset 0 -5px 0 #BE4C1A;
   	
 }
 
 h1{
-	margin-bottom: 20px;
+	font-weight: normal;
+	margin-bottom: 12px;
+	text-shadow: #171717 1px 1px;
 
 }
 
@@ -54,6 +59,21 @@ h1{
 }
 
 #quote{
+	position: absolute;
+	left: 20px;
+	width: 66%;
+	top: 20px;
+	display: none;
+
+}
+
+#quote-text{
+	display: inline-block;
+	text-align: left; 
+	font-size: 32pt; 
+	color: #F7F7F7;
+	background-color: #171717;
+	padding: 10px;
 
 }
 
@@ -70,5 +90,6 @@ h1{
 	margin-right: auto;
 	margin-left: auto;
 	text-align: center;
+
 
 }
