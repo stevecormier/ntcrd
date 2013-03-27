@@ -5,15 +5,6 @@
  	var theWindow        = $(window);
 	var $bg              = $("#bg");
 	var aspectRatio      = $bg.width() / $bg.height();
-
- 	jQuery.ajaxSetup({
-  		beforeSend: function() {
-     		$('#loading').show();
-  		},
-  		complete: function(){
-     		$('#loading').hide();
-  		},
-	});
  
  	function createNTCRD(){
 
@@ -25,28 +16,41 @@
  		var audio;
  		var quote;
  		var source;
+ 		var count = 2;
+
+ 		$('#loading').show();
 
  		$.getJSON(photo_url, function(data) {
- 			console.log(data);
  			photo = findMostNotes(data.response.posts);
-
  			$("#bg").attr("src", data.response.posts[photo].photos[0].original_size.url);
+ 			count--;
+
+ 			if (count === 0){
+ 				showNTCRD();
+ 			};
  			
  		});
 
  		$.getJSON(quote_url, function(data) {
 
  			quote = findMostNotes(data.response.posts);
- 			console.log(data.response.posts[quote]);
-
  			$("#quote-text").append(data.response.posts[quote].text);
  			$("#quote-source").append("- " + data.response.posts[quote].source);
 
- 		});
- 
- 		$("form").hide();
- 		$("#quote").show();
+ 			count--;
 
+ 			if (count === 0){
+ 				showNTCRD();
+ 			};
+ 		});
+
+	}
+
+	function showNTCRD(){
+		$('#loading').hide();
+		$("form").hide();
+		$("#quote").show();
+		$("#bg").show();
 	}
 
 	function resizeBg() {
