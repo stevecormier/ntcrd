@@ -5,10 +5,14 @@
  	var theWindow        = $(window);
 	var $bg              = $("#bg");
 	var aspectRatio      = $bg.width() / $bg.height();
- 
+
+	if(window.location.href.split( '?' )[1] != null){
+ 		createNTCRD();
+ 	} 
+
  	function createNTCRD(){
 
- 		var name = $(":text").attr("value");
+ 		var name = window.location.href.split( '?' )[1];
  		var photo_url = "http://api.tumblr.com/v2/blog/" + name + ".tumblr.com/posts/photo?api_key=" + API_KEY + "&notes_info=true&callback=?";
  		var quote_url = "http://api.tumblr.com/v2/blog/" + name + ".tumblr.com/posts/quote?api_key=" + API_KEY + "&notes_info=true&callback=?";
  		var audio_url = "http://api.tumblr.com/v2/blog/" + name + ".tumblr.com/posts/audio?api_key=" + API_KEY + "&notes_info=true&callback=?";
@@ -21,27 +25,40 @@
  		$('#loading').show();
 
  		$.getJSON(photo_url, function(data) {
- 			photo = findMostNotes(data.response.posts);
- 			$("#bg").attr("src", data.response.posts[photo].photos[0].original_size.url);
- 			count--;
 
- 			if (count === 0){
- 				showNTCRD();
- 			};
- 			
+ 			if(data.meta.status === 200){
+
+ 				photo = findMostNotes(data.response.posts);
+ 				$("#bg").attr("src", data.response.posts[photo].photos[0].original_size.url);
+ 				count--;
+
+ 				if (count === 0){
+ 					showNTCRD();
+ 				};
+
+ 			}else{
+	 			requestFailed();
+	 		};
+
  		});
 
  		$.getJSON(quote_url, function(data) {
 
- 			quote = findMostNotes(data.response.posts);
- 			$("#quote-text").append(data.response.posts[quote].text);
- 			$("#quote-source").append("- " + data.response.posts[quote].source);
+ 			if(data.meta.status === 200){
 
- 			count--;
+	 			quote = findMostNotes(data.response.posts);
+	 			$("#quote-text").append(data.response.posts[quote].text);
+	 			$("#quote-source").append("- " + data.response.posts[quote].source);
 
- 			if (count === 0){
- 				showNTCRD();
- 			};
+	 			count--;
+
+	 			if (count === 0){
+	 				showNTCRD();
+	 			};
+	 		}else{
+	 			requestFailed();
+	 		};
+
  		});
 
 	}
@@ -79,6 +96,10 @@
 		return index;
 
 	}
+
+	function requestFailed(){
+		window.location = "./fail.html";
+	}
 	                   			
 	theWindow.resize(resizeBg).trigger("resize"); 
 
@@ -87,13 +108,16 @@
  		if(event.keyCode == 13){
 
  			event.preventDefault();
+ 			history.pushState(null, null, "?" + $(":text").attr("value"));
  			createNTCRD();
 
 		};
  	});
 
  	$(":button").click(function () {
+ 		history.pushState(null, null, "?" + $(":text").attr("value"));
  		createNTCRD();
 
  	});
+
 });

@@ -65,17 +65,11 @@ h1{
 	width: 66%;
 	top: 20px;
 	display: none;
-	transition-property: opacity;
-	-webkit-transition-property: opacity; /* Safari and Chrome */
-	-webkit-transition-duration: 10s;
-  	transition-duration: 10s;
-  	opacity: 0.7;
 
 }
 
 #quote:hover{
-	-webkit-transition-duration: .5s;
-	opacity: 1;
+
 }
 
 #quote-text{
